@@ -55,17 +55,17 @@ def proceso():
     parametros = ParametrosBotAfip()
 
     ruta_Afip = parametros.rutasAfip()
-    #ruta_acuse, ruta_controladoras = parametros.rutasArchivos() #PRD
+    ruta_acuse, ruta_controladoras = parametros.rutasArchivos() #PRD
 
-    ruta_archivos_qas = "C:\\Users\\"+usuario+"\\Desktop\\reporte_afip_QAS" #QAS
-    carp_descarga = "C:\\Users\\"+usuario+"\\Desktop\\acuse_afip_QAS" #QAS
+    #ruta_archivos_qas = "C:\\Users\\"+usuario+"\\Desktop\\reporte_afip_QAS" #QAS
+    #carp_descarga = "C:\\Users\\"+usuario+"\\Desktop\\acuse_afip_QAS" #QAS
 
     opciones = webdriver.ChromeOptions()
     opciones.add_argument('--window-size=1920,1080')
     opciones.add_argument("--safebrowsing-disable-download-protection")
     opciones.add_argument("safebrowsing-disable-extension-blacklist")
     opciones.add_experimental_option("prefs", {
-                "download.default_directory" : carp_descarga, #ruta_acuse, carp_descarga
+                "download.default_directory" : ruta_acuse, #ruta_acuse, carp_descarga
                 "download.prompt_for_download": False,
                 "download.directory_upgrade": True,
                 "safebrowsing.enabled": True
@@ -75,7 +75,7 @@ def proceso():
 
     try:
 
-        if not os.path.exists(carp_descarga): #carp_descarga QAS / ruta_acuse PRD
+        if not os.path.exists(ruta_acuse): #carp_descarga QAS / ruta_acuse PRD
                 os.mkdir("C:\\Users\\"+usuario+"\\Desktop\\acuse_afip_QAS") #acuse_afip_QAS QAS / acuse PRd
                 time.sleep(1)
         
@@ -144,8 +144,8 @@ def proceso():
         time.sleep(tempo)
 
         print("Buscando los documentos para presentar")
-        documentos = os.listdir(ruta_archivos_qas) #QAS
-        #documentos = buscarArchivos() #PRD
+        #documentos = os.listdir(ruta_archivos_qas) #QAS
+        documentos = buscarArchivos() #PRD
         
         print("*"*20)
 
@@ -154,7 +154,7 @@ def proceso():
             print("Subiendo:...", arc)
 
             #DESCOMENTAR EN PRD
-            arc = ruta_archivos_qas + "\\" + arc
+            #arc = ruta_archivos_qas + "\\" + arc
 
             time.sleep(espera)
 
@@ -191,7 +191,6 @@ def proceso():
                 EC.presence_of_element_located((By.XPATH, "//div[@class='title' and contains(text(),'La DJ seleccionada ya ha sido presentada. No puede volver a presentarla.')]"))
                     )
             except Exception as ex:
-                print(ex)
                 texto_presentada = ""
                 pass
 
@@ -257,7 +256,7 @@ def proceso():
         time.sleep(tempo)
 
         print("Se imprimieron los siguientes acuses:")
-        acuses = os.listdir(carp_descarga) #carp_descarga QAS / ruta_acuse PRD
+        acuses = os.listdir(ruta_acuse) #carp_descarga QAS / ruta_acuse PRD
         for i in acuses:
             print(i)
         messagebox.showinfo(title = "Fin de Ejecución", message = "Proceso terminado")
