@@ -76,7 +76,7 @@ def proceso():
     try:
 
         if not os.path.exists(ruta_acuse): #carp_descarga QAS / ruta_acuse PRD
-                os.mkdir("C:\\Users\\"+usuario+"\\Desktop\\acuse_afip_QAS") #acuse_afip_QAS QAS / acuse PRd
+                os.mkdir(ruta_acuse) #acuse_afip_QAS QAS / acuse PRd
                 time.sleep(1)
         
         driver.maximize_window()
